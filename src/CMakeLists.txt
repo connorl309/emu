@@ -15,7 +15,7 @@ foreach(_headerFile ${C_HEADERS})
     list(APPEND HEADER_PATHS ${_dir})
 endforeach()
 
-target_compile_options(emulator PUBLIC -m64)
+target_compile_options(emulator PUBLIC -m64 -g1)
 target_include_directories(emulator PUBLIC ${HEADER_PATHS})
 target_sources(emulator PUBLIC main.cpp ${C_SRCS})
 target_link_libraries(emulator -lSDL2)

@@ -14,14 +14,15 @@ private:
     std::thread event_thread;
     std::atomic<bool> checkEventSignal;
     std::chrono::high_resolution_clock fastclk;
-    WindowMgr* instance;
+    std::atomic<bool> isRunning;
 
-    void _pollEvents();
+    static void _pollEvents(WindowMgr* instance);
 
 public:
     WindowMgr(std::string name, const uint16_t w, const uint16_t h);
     ~WindowMgr();
     void event_handler_init();
+    inline bool getStatus() { return isRunning.load(); }
 };
 
 #endif
