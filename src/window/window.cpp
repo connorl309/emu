@@ -18,10 +18,6 @@ WindowMgr::WindowMgr(std::string name, const uint16_t w, const uint16_t h) {
     }
 }
 WindowMgr::~WindowMgr() {
-    if (SDL_DestroyWindowSurface(this->wdw) != 0) {
-        Log(WARNING, "SDL could not destroy window surface! Cause: %s\n", SDL_GetError());
-    }
     SDL_DestroyWindow(this->wdw);
-
     Log(INFO, "Shutting down!\n%s\n\n", SDL_GetError());
 }
