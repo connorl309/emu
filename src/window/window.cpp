@@ -8,7 +8,7 @@
 WindowMgr::WindowMgr(std::string name, const uint16_t w, const uint16_t h) {
     int init_val = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS);
     if (init_val != 0) {
-        Log(ERROR, "SDL failed to initialize! Cause: %s\n", SDL_GetError());
+        LOG(ERROR, "SDL failed to initialize! Cause: %s\n", SDL_GetError());
     }
     else {
         // create SDL window
@@ -25,24 +25,38 @@ WindowMgr::~WindowMgr() {
     checkEventSignal.store(false); // terminate event thread
     event_thread.join();
     SDL_DestroyWindow(this->wdw);
-    Log(INFO, "Shutting down!\n%s\n\n", SDL_GetError());
+    LOG(INFO, "Shutting down!\n%s\n", SDL_GetError());
 }
 
 void WindowMgr::event_handler_init() {
     event_thread = std::thread(_pollEvents, this);
 }
 
+/**
+ * Poll events happening in the window
+ * 
+ * this runs on a separate thread, which is killed upon exit of the 
+ * program.
+*/
 void WindowMgr::_pollEvents(WindowMgr* instance) {
     while (instance->checkEventSignal.load()) {
         SDL_Event e;
+
         while (SDL_PollEvent(&e)) {
+            bool needRedraw = false;
+
             // handle event
             switch (e.type) {
-
+                // keypress
                 case SDL_KEYDOWN: {
-                    Log(INFO, "Handling event - Keypress\n");
                     int32_t key = e.key.keysym.sym;
                     if (key == SDLK_ESCAPE)
+                        instance->isRunning.store(false);
+                    LOG(INFO, "Event - Keypress: %d\n", key);
+                    break;
+                }
+                case SDL_WINDOWEVENT: {
+                    if (e.window.event == SDL_WINDOWEVENT_CLOSE)
                         instance->isRunning.store(false);
                     break;
                 }

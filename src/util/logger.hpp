@@ -7,6 +7,7 @@
 
 #include <string>
 #include <stdarg.h>
+#include <mutex>
 
 typedef enum {
     INFO,
@@ -14,21 +15,19 @@ typedef enum {
     ERROR
 } LOG_LEVEL;
 
-void Log(LOG_LEVEL level, std::string msg, ...) {
-    va_list arguments;
-    va_start(arguments, msg);
-    switch (level) {
-        case LOG_LEVEL::INFO:
-            printf("[ INFO ] ");
-            break;
-        case LOG_LEVEL::WARNING:
-            printf("[ WARNING ] ");
-            break;
-        case LOG_LEVEL::ERROR:
-            printf("[ !ERROR! ] ");
-            break;
-    }
-    vprintf(msg.c_str(), arguments);
-}
+static std::mutex log_lock;
+
+// Funky log macro that does some mutex stuff around the log call itself
+// maybe not needed, I have no clue.
+#define LOG(level, msg, ...) \
+    {   \
+    std::unique_lock<std::mutex> loglock(log_lock, std::defer_lock);    \
+    if (loglock.try_lock()) { \
+        __Log((level), msg, __VA_ARGS__); \
+        loglock.unlock();   \
+    }   \
+    }   \
+
+void __Log(LOG_LEVEL level, std::string msg, ...);
 
 #endif
