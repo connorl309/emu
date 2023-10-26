@@ -4,6 +4,7 @@
 #include "snes_common.hpp"
 #include "snes_memory.hpp"
 #include <bitset>
+#include <vector>
 
 // http://www.6502.org/tutorials/65c816opcodes.html
 namespace snes_cpu {
@@ -81,7 +82,7 @@ typedef enum {
         E = 1 if running in emulation mode. This forces M flag = X flag = 1, and high byte of stack pointer to 0x01.
     */
     e_flag,
-    PSR_FLAGS
+    NUM_FLAGS
 } _flags;
 /**
  * List of registers supported by the 65c816
@@ -102,15 +103,60 @@ typedef struct {
  * Addressing modes supported by the 65c816
 */
 typedef enum {
+    absolute,
+    absolute_x, // offset + X (+1) 
+    absolute_y, // offset + Y (+1)
+    absolute_paren, // 16 bit ptr; only by jmp
+    absolute_bracket, // 24 bit ptr; only by jmp
+    absolute_x_paren, // 16 bit ptr; ptr = dbr + offset + x
+    
+    accumulator,
+    
+    direct,
+    direct_x, // D + offset + x
+    direct_y, // D + offset + y
+    direct_paren, // 16 bit ptr = dbr + offset
+    direct_bracket, // 24 bit ptr = dbr + offset
+    direct_x_paren, // 16 bit ptr = dbr + offset + x
+    direct_paren_y,
+    direct_bracket_y,
 
-} addressing_modes;
+    immediate,
 
+    long_,
+    long_x,
+    rel8, rel16,
+
+    src_dest,
+    stack_s,
+    stack_s_paren_y,
+    NUM_ADDR_MODES // kill me
+} addressing_mode;
+
+/**
+ * Instruction struct
+ * See 6.1.1.1 for example of this
+*/
 typedef struct {
     uint8_t opcode;
     uint8_t length;
-    uint8_t cycles;
-
+    std::vector<uint8_t> data; // var length opcodes :(
+    std::string mnemonic;
+    std::vector<std::pair<_flags, int>> flags_set;
+    addressing_mode mode;
 } instruction;
+
+// Create an instruction
+instruction parseInstruction(uint8_t* memory_address, const cpu_registers& regfile);
+
+// Helper macro for byte manipulation
+// SET_BYTE(0, 0xFF, 2) would yield 0xFF00000
+// SET_BYTE(0xAABBCC, 0xDD, 2) would yield 0xDDBBCC, etc
+#define SET_BYTE(number, val, byte)   ((number) & (~(0xFF << (8*(byte))))) | ((val) << (8 * (byte)))
+// Get high byte of a 2 byte number
+#define HI_BYTE(number)     (((number) & 0xFF00) >> 8)
+// Get low byte of a 2 byte number
+#define LO_BYTE(number)     ((number) & 0xFF)
 
 /**
  * 
