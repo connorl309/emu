@@ -54,7 +54,7 @@ typedef enum {
         In emulation mode (B flag):
         - distinguishes between IRQ (hardware) from BRK (software) interrupts.
     */
-    x_b_flag,
+    x_flag,
     /*
         When D = 0:
         - ADC/SBC instructions perform binary arithmatic
@@ -122,6 +122,7 @@ typedef enum {
     direct_bracket_y,
 
     immediate,
+    implied,
 
     long_,
     long_x,
@@ -142,8 +143,8 @@ typedef struct {
     uint8_t length;
     std::vector<uint8_t> data; // var length opcodes :(
     std::string mnemonic;
-    std::vector<std::pair<_flags, int>> flags_set;
-    addressing_mode mode;
+    std::vector<std::pair<_flags, std::string>> flags_set;
+    snes_cpu::addressing_mode mode;
 } instruction;
 
 // Create an instruction
