@@ -98,6 +98,10 @@ def printParseCppFile(f: TextIOWrapper, mnem: str):
     f.write(f"instruction {mnem.upper()}_parse_instr(uint8_t* memory_address, uint8_t m_flag_val)" + " {\n")
     f.write("\tsnes_cpu::instruction instr;\n\n\tswitch ( *memory_address ) {\n")
 
+GENERATE_PARSE_FILES = True
+GENERATE_ISA_TOPLEVEL = True
+GENERATE_ISA_IMPL_HEADER = True
+
 if __name__ == "__main__":
     isa_list: List[instr] = []
     instruction_list = []
@@ -126,7 +130,7 @@ if __name__ == "__main__":
                             instruction_list.append(elements[6])
         
         # Generate every instruction's parse/X_parse.cpp file
-        if (True):
+        if (GENERATE_PARSE_FILES):
             outputter = None
             last_instr = ""
             for i in isa_list:
@@ -146,7 +150,7 @@ if __name__ == "__main__":
             outputter.close()
         # Generate the isa.cpp file
         # Note: the opcode map generated must match the parse_ function names in the if() statement after this one
-        if (True):
+        if (GENERATE_ISA_TOPLEVEL):
             outputter = None
             mnemonic_map: Dict[str, str] = {}
             outputter = open("./src/snes/cpu/isa.cpp", "w+")
@@ -172,7 +176,7 @@ if __name__ == "__main__":
             outputter.write("}")
             outputter.close()
         # Generate isa_impl.hpp declarations
-        if (True):
+        if (GENERATE_ISA_IMPL_HEADER):
             outputter = open("./src/snes/inc/isa_impl.hpp", "w+")
             outputter.write("#ifndef ISA_IMPL_HPP\n#define ISA_IMPL_HPP\n#include \"isa.hpp\"\n")
             outputter.write("\nnamespace snes_cpu {\n")
