@@ -4,6 +4,7 @@
 #include "snes_common.hpp"
 #include "snes_memory.hpp"
 #include <bitset>
+#include <functional>
 #include <vector>
 
 // http://www.6502.org/tutorials/65c816opcodes.html
@@ -139,16 +140,17 @@ typedef enum {
  * See 6.1.1.1 for example of this
 */
 typedef struct {
-    uint8_t opcode;
-    uint8_t length;
+    uint8_t opcode; // opcode byte
+    uint8_t length; // # of bytes used by the instruction
     std::vector<uint8_t> data; // var length opcodes :(
-    std::string mnemonic;
-    std::vector<std::pair<_flags, std::string>> flags_set;
+    std::string mnemonic; // instruction mnemonic
+    std::vector<std::pair<_flags, std::string>> flags_set; // what flags get set on execution
     snes_cpu::addressing_mode mode;
+    std::function<void(cpu_registers&)> callback;
 } instruction;
 
 // Create an instruction
-instruction parseInstruction(uint8_t* memory_address, const cpu_registers& regfile);
+instruction parseInstruction(uint8_t* memory_address, cpu_registers& regfile);
 
 // Helper macro for byte manipulation
 // SET_BYTE(0, 0xFF, 2) would yield 0xFF00000

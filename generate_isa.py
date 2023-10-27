@@ -67,6 +67,7 @@ class instr():
         toRet += f"\tinstr.mnemonic = \"{self.mnemonic.upper()}\";\n"
         toRet += f"\tinstr.length = {self.len[0]} - m_val;\n"
         toRet += f"\tinstr.mode = {self.mode};\n"
+        toRet += f"\tinstr.callback = {self.mnemonic.upper()}_execute;\n"
         # tricky part here is flags
         toRet += "\tinstr.flags_set = {\n"
         funny = "nvmxdizce"
@@ -87,6 +88,7 @@ class instr():
 
 if __name__ == "__main__":
     isa_list = []
+    instruction_list = []
     with open("from_web.html") as file:
         soup = BeautifulSoup(file, 'html.parser')
         all_pres = soup.findAll('pre')
@@ -108,6 +110,11 @@ if __name__ == "__main__":
                     elements = fun.sub(" ", i).strip().split(" ")
                     if (len(elements) == 7 or len(elements) == 8):
                         isa_list.append(instr(opcode=elements[0], len=elements[1], mode=elements[3], flagstring=elements[4] + elements[5], mnemonic=elements[6]))
+                        if (elements[6] not in instruction_list):
+                            instruction_list.append(elements[6])
         
         for i in isa_list:
             print(i)
+        for i in instruction_list:
+            print(f"// Execute an {str(i).upper()} instruction from current register states")
+            print(f"void {str(i).upper()}_execute(cpu_registers& regfile);")

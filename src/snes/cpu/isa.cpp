@@ -1,16 +1,18 @@
 #include "../inc/isa.hpp"
+#include "../inc/isa_impl.hpp"
 
 namespace snes_cpu {
     /**
      * Parse an instruction from a starting memory address
      * This is a beefy function.
     */
-    instruction parseInstruction(uint8_t* memory_address, const cpu_registers& regfile) {
+    instruction parseInstruction(uint8_t* memory_address, cpu_registers& regfile) {
         snes_cpu::instruction instr;
         const uint8_t m_val = regfile.psr[m_flag];
 
         switch( *memory_address )
         {
+            
             /*
                 Instruction: ADC - mode = '(dir,X)'
             */
@@ -19,6 +21,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -37,6 +40,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -55,6 +59,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -73,6 +78,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -91,6 +97,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -109,6 +116,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -127,6 +135,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -145,6 +154,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -163,6 +173,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -181,6 +192,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -199,6 +211,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -217,6 +230,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -235,6 +249,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -253,6 +268,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -271,6 +287,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ADC";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = ADC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ADC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // ADC instruction sets V flag to M flag value
@@ -289,6 +306,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -307,6 +325,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -325,6 +344,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -343,6 +363,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -361,6 +382,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -379,6 +401,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -397,6 +420,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -415,6 +439,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -433,6 +458,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -451,6 +477,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -469,6 +496,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -487,6 +515,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -505,6 +534,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -523,6 +553,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -541,6 +572,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SBC";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = SBC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // SBC instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // SBC instruction sets V flag to M flag value
@@ -559,6 +591,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -576,6 +609,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -593,6 +627,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -610,6 +645,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -627,6 +663,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -644,6 +681,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -661,6 +699,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -678,6 +717,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -695,6 +735,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -712,6 +753,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -729,6 +771,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -746,6 +789,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -763,6 +807,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -780,6 +825,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -797,6 +843,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CMP";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = CMP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -814,6 +861,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CPX";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = CPX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // CPX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // CPX instruction sets Z flag to X flag value
@@ -831,6 +879,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CPX";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = CPX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // CPX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // CPX instruction sets Z flag to X flag value
@@ -848,6 +897,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CPX";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = CPX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // CPX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // CPX instruction sets Z flag to X flag value
@@ -865,6 +915,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CPY";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = CPY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // CPY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // CPY instruction sets Z flag to X flag value
@@ -882,6 +933,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CPY";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = CPY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // CPY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // CPY instruction sets Z flag to X flag value
@@ -899,6 +951,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CPY";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = CPY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // CPY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // CPY instruction sets Z flag to X flag value
@@ -916,6 +969,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEC";
                 instr.length = 1 - m_val;
                 instr.mode = accumulator;
+                instr.callback = DEC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // DEC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // DEC instruction sets Z flag to M flag value
@@ -932,6 +986,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEC";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = DEC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // DEC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // DEC instruction sets Z flag to M flag value
@@ -948,6 +1003,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = DEC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // DEC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // DEC instruction sets Z flag to M flag value
@@ -964,6 +1020,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = DEC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // DEC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // DEC instruction sets Z flag to M flag value
@@ -980,6 +1037,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = DEC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // DEC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // DEC instruction sets Z flag to M flag value
@@ -996,6 +1054,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = DEX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // DEX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // DEX instruction sets Z flag to X flag value
@@ -1012,6 +1071,7 @@ namespace snes_cpu {
                 instr.mnemonic = "DEY";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = DEY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // DEY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // DEY instruction sets Z flag to X flag value
@@ -1028,6 +1088,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INC";
                 instr.length = 1 - m_val;
                 instr.mode = accumulator;
+                instr.callback = INC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // INC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // INC instruction sets Z flag to M flag value
@@ -1044,6 +1105,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INC";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = INC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // INC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // INC instruction sets Z flag to M flag value
@@ -1060,6 +1122,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = INC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // INC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // INC instruction sets Z flag to M flag value
@@ -1076,6 +1139,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INC";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = INC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // INC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // INC instruction sets Z flag to M flag value
@@ -1092,6 +1156,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INC";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = INC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // INC instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // INC instruction sets Z flag to M flag value
@@ -1108,6 +1173,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = INX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // INX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // INX instruction sets Z flag to X flag value
@@ -1124,6 +1190,7 @@ namespace snes_cpu {
                 instr.mnemonic = "INY";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = INY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // INY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // INY instruction sets Z flag to X flag value
@@ -1140,6 +1207,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1156,6 +1224,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1172,6 +1241,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1188,6 +1258,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1204,6 +1275,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1220,6 +1292,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1236,6 +1309,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1252,6 +1326,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1268,6 +1343,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1284,6 +1360,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1300,6 +1377,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1316,6 +1394,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1332,6 +1411,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1348,6 +1428,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1364,6 +1445,7 @@ namespace snes_cpu {
                 instr.mnemonic = "AND";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = AND_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // AND instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // AND instruction sets Z flag to M flag value
@@ -1380,6 +1462,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1396,6 +1479,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1412,6 +1496,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1428,6 +1513,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1444,6 +1530,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1460,6 +1547,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1476,6 +1564,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1492,6 +1581,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1508,6 +1598,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1524,6 +1615,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1540,6 +1632,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1556,6 +1649,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1572,6 +1666,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1588,6 +1683,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1604,6 +1700,7 @@ namespace snes_cpu {
                 instr.mnemonic = "EOR";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = EOR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // EOR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // EOR instruction sets Z flag to M flag value
@@ -1620,6 +1717,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1636,6 +1734,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1652,6 +1751,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1668,6 +1768,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1684,6 +1785,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1700,6 +1802,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1716,6 +1819,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1732,6 +1836,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1748,6 +1853,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1764,6 +1870,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1780,6 +1887,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1796,6 +1904,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1812,6 +1921,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1828,6 +1938,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1844,6 +1955,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ORA";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = ORA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -1860,6 +1972,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BIT";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = BIT_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -1877,6 +1990,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BIT";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = BIT_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -1894,6 +2008,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BIT";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = BIT_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -1911,6 +2026,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BIT";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = BIT_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
                     std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -1928,6 +2044,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BIT";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = BIT_execute;
                 instr.flags_set = {
                     std::pair(z_flag, "m"), // BIT instruction sets Z flag to M flag value
                 };
@@ -1943,6 +2060,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TRB";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = TRB_execute;
                 instr.flags_set = {
                     std::pair(z_flag, "m"), // TRB instruction sets Z flag to M flag value
                 };
@@ -1958,6 +2076,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TRB";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = TRB_execute;
                 instr.flags_set = {
                     std::pair(z_flag, "m"), // TRB instruction sets Z flag to M flag value
                 };
@@ -1973,6 +2092,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TSB";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = TSB_execute;
                 instr.flags_set = {
                     std::pair(z_flag, "m"), // TSB instruction sets Z flag to M flag value
                 };
@@ -1988,6 +2108,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TSB";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = TSB_execute;
                 instr.flags_set = {
                     std::pair(z_flag, "m"), // TSB instruction sets Z flag to M flag value
                 };
@@ -2003,6 +2124,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ASL";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = ASL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ASL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ASL instruction sets Z flag to M flag value
@@ -2020,6 +2142,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ASL";
                 instr.length = 1 - m_val;
                 instr.mode = accumulator;
+                instr.callback = ASL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ASL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ASL instruction sets Z flag to M flag value
@@ -2037,6 +2160,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ASL";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = ASL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ASL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ASL instruction sets Z flag to M flag value
@@ -2054,6 +2178,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ASL";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = ASL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ASL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ASL instruction sets Z flag to M flag value
@@ -2071,6 +2196,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ASL";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = ASL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ASL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ASL instruction sets Z flag to M flag value
@@ -2088,6 +2214,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LSR";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = LSR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
                     std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -2105,6 +2232,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LSR";
                 instr.length = 1 - m_val;
                 instr.mode = accumulator;
+                instr.callback = LSR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
                     std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -2122,6 +2250,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LSR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = LSR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
                     std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -2139,6 +2268,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LSR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = LSR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
                     std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -2156,6 +2286,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LSR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = LSR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
                     std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -2173,6 +2304,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROL";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = ROL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -2190,6 +2322,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROL";
                 instr.length = 1 - m_val;
                 instr.mode = accumulator;
+                instr.callback = ROL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -2207,6 +2340,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROL";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = ROL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -2224,6 +2358,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROL";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = ROL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -2241,6 +2376,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROL";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = ROL_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -2258,6 +2394,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROR";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = ROR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROR instruction sets Z flag to M flag value
@@ -2275,6 +2412,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROR";
                 instr.length = 1 - m_val;
                 instr.mode = accumulator;
+                instr.callback = ROR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROR instruction sets Z flag to M flag value
@@ -2292,6 +2430,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = ROR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROR instruction sets Z flag to M flag value
@@ -2309,6 +2448,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROR";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = ROR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROR instruction sets Z flag to M flag value
@@ -2326,6 +2466,7 @@ namespace snes_cpu {
                 instr.mnemonic = "ROR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = ROR_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // ROR instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // ROR instruction sets Z flag to M flag value
@@ -2343,6 +2484,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BCC";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BCC_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2357,6 +2499,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BCS";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BCS_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2371,6 +2514,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BEQ";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BEQ_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2385,6 +2529,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BMI";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BMI_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2399,6 +2544,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BNE";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BNE_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2413,6 +2559,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BPL";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BPL_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2427,6 +2574,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BRA";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BRA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2441,6 +2589,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BVC";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BVC_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2455,6 +2604,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BVS";
                 instr.length = 2 - m_val;
                 instr.mode = rel8;
+                instr.callback = BVS_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2469,6 +2619,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BRL";
                 instr.length = 3 - m_val;
                 instr.mode = rel16;
+                instr.callback = BRL_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2483,6 +2634,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = JMP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2497,6 +2649,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JMP";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = JMP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2511,6 +2664,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_paren;
+                instr.callback = JMP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2525,6 +2679,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x_paren;
+                instr.callback = JMP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2539,6 +2694,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JMP";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_bracket;
+                instr.callback = JMP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2553,6 +2709,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JSL";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = JSL_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2567,6 +2724,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JSR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = JSR_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2581,6 +2739,7 @@ namespace snes_cpu {
                 instr.mnemonic = "JSR";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x_paren;
+                instr.callback = JSR_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2595,6 +2754,7 @@ namespace snes_cpu {
                 instr.mnemonic = "RTL";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = RTL_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2609,6 +2769,7 @@ namespace snes_cpu {
                 instr.mnemonic = "RTS";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = RTS_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -2623,6 +2784,7 @@ namespace snes_cpu {
                 instr.mnemonic = "BRK";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = BRK_execute;
                 instr.flags_set = {
                     std::pair(d_flag, "0"), // BRK instruction sets D flag to 0 flag value
                     std::pair(i_flag, "1"), // BRK instruction sets I flag to 1 flag value
@@ -2639,6 +2801,7 @@ namespace snes_cpu {
                 instr.mnemonic = "COP";
                 instr.length = 2 - m_val;
                 instr.mode = immediate;
+                instr.callback = COP_execute;
                 instr.flags_set = {
                     std::pair(d_flag, "0"), // COP instruction sets D flag to 0 flag value
                     std::pair(i_flag, "1"), // COP instruction sets I flag to 1 flag value
@@ -2655,6 +2818,7 @@ namespace snes_cpu {
                 instr.mnemonic = "RTI";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = RTI_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // RTI instruction sets N flag to * flag value
                     std::pair(v_flag, "*"), // RTI instruction sets V flag to * flag value
@@ -2677,6 +2841,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CLC";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = CLC_execute;
                 instr.flags_set = {
                     std::pair(c_flag, "0"), // CLC instruction sets C flag to 0 flag value
                 };
@@ -2692,6 +2857,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CLD";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = CLD_execute;
                 instr.flags_set = {
                     std::pair(d_flag, "0"), // CLD instruction sets D flag to 0 flag value
                 };
@@ -2707,6 +2873,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CLI";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = CLI_execute;
                 instr.flags_set = {
                     std::pair(i_flag, "0"), // CLI instruction sets I flag to 0 flag value
                 };
@@ -2722,6 +2889,7 @@ namespace snes_cpu {
                 instr.mnemonic = "CLV";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = CLV_execute;
                 instr.flags_set = {
                     std::pair(v_flag, "0"), // CLV instruction sets V flag to 0 flag value
                 };
@@ -2737,6 +2905,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SEC";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = SEC_execute;
                 instr.flags_set = {
                     std::pair(c_flag, "1"), // SEC instruction sets C flag to 1 flag value
                 };
@@ -2752,6 +2921,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SED";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = SED_execute;
                 instr.flags_set = {
                     std::pair(d_flag, "1"), // SED instruction sets D flag to 1 flag value
                 };
@@ -2767,6 +2937,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SEI";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = SEI_execute;
                 instr.flags_set = {
                     std::pair(i_flag, "1"), // SEI instruction sets I flag to 1 flag value
                 };
@@ -2782,6 +2953,7 @@ namespace snes_cpu {
                 instr.mnemonic = "REP";
                 instr.length = 2 - m_val;
                 instr.mode = immediate;
+                instr.callback = REP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // REP instruction sets N flag to * flag value
                     std::pair(v_flag, "*"), // REP instruction sets V flag to * flag value
@@ -2804,6 +2976,7 @@ namespace snes_cpu {
                 instr.mnemonic = "SEP";
                 instr.length = 2 - m_val;
                 instr.mode = immediate;
+                instr.callback = SEP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // SEP instruction sets N flag to * flag value
                     std::pair(v_flag, "*"), // SEP instruction sets V flag to * flag value
@@ -2826,6 +2999,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2842,6 +3016,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2858,6 +3033,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2874,6 +3050,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2890,6 +3067,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2906,6 +3084,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2922,6 +3101,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2938,6 +3118,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2954,6 +3135,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2970,6 +3152,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -2986,6 +3169,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -3002,6 +3186,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -3018,6 +3203,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -3034,6 +3220,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -3050,6 +3237,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDA";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = LDA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // LDA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // LDA instruction sets Z flag to M flag value
@@ -3066,6 +3254,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDX";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = LDX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDX instruction sets Z flag to X flag value
@@ -3082,6 +3271,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDX";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = LDX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDX instruction sets Z flag to X flag value
@@ -3098,6 +3288,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDX";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = LDX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDX instruction sets Z flag to X flag value
@@ -3114,6 +3305,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDX";
                 instr.length = 2 - m_val;
                 instr.mode = direct_y;
+                instr.callback = LDX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDX instruction sets Z flag to X flag value
@@ -3130,6 +3322,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDX";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = LDX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDX instruction sets Z flag to X flag value
@@ -3146,6 +3339,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDY";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = LDY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDY instruction sets Z flag to X flag value
@@ -3162,6 +3356,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDY";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = LDY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDY instruction sets Z flag to X flag value
@@ -3178,6 +3373,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDY";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = LDY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDY instruction sets Z flag to X flag value
@@ -3194,6 +3390,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDY";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = LDY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDY instruction sets Z flag to X flag value
@@ -3210,6 +3407,7 @@ namespace snes_cpu {
                 instr.mnemonic = "LDY";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = LDY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // LDY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // LDY instruction sets Z flag to X flag value
@@ -3226,6 +3424,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x_paren;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3240,6 +3439,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3254,6 +3454,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3268,6 +3469,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3282,6 +3484,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3296,6 +3499,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 4 - m_val;
                 instr.mode = long_;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3310,6 +3514,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren_y;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3324,6 +3529,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_paren;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3338,6 +3544,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = stack_s_paren_y;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3352,6 +3559,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3366,6 +3574,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 2 - m_val;
                 instr.mode = direct_bracket_y;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3380,6 +3589,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_y;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3394,6 +3604,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3408,6 +3619,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STA";
                 instr.length = 4 - m_val;
                 instr.mode = long_x;
+                instr.callback = STA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3422,6 +3634,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STX";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = STX_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3436,6 +3649,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STX";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = STX_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3450,6 +3664,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STX";
                 instr.length = 2 - m_val;
                 instr.mode = direct_y;
+                instr.callback = STX_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3464,6 +3679,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STY";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = STY_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3478,6 +3694,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STY";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = STY_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3492,6 +3709,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STY";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = STY_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3506,6 +3724,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STZ";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = STZ_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3520,6 +3739,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STZ";
                 instr.length = 2 - m_val;
                 instr.mode = direct_x;
+                instr.callback = STZ_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3534,6 +3754,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STZ";
                 instr.length = 3 - m_val;
                 instr.mode = absolute;
+                instr.callback = STZ_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3548,6 +3769,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STZ";
                 instr.length = 3 - m_val;
                 instr.mode = absolute_x;
+                instr.callback = STZ_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3562,6 +3784,7 @@ namespace snes_cpu {
                 instr.mnemonic = "MVN";
                 instr.length = 3 - m_val;
                 instr.mode = src_dest;
+                instr.callback = MVN_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3576,6 +3799,7 @@ namespace snes_cpu {
                 instr.mnemonic = "MVP";
                 instr.length = 3 - m_val;
                 instr.mode = src_dest;
+                instr.callback = MVP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3590,6 +3814,7 @@ namespace snes_cpu {
                 instr.mnemonic = "NOP";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = NOP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3604,6 +3829,7 @@ namespace snes_cpu {
                 instr.mnemonic = "WDM";
                 instr.length = 2 - m_val;
                 instr.mode = immediate;
+                instr.callback = WDM_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3618,6 +3844,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PEA";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = PEA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3632,6 +3859,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PEI";
                 instr.length = 2 - m_val;
                 instr.mode = direct;
+                instr.callback = PEI_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3646,6 +3874,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PER";
                 instr.length = 3 - m_val;
                 instr.mode = immediate;
+                instr.callback = PER_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3660,6 +3889,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHA";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHA_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3674,6 +3904,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHX_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3688,6 +3919,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHY";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHY_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3702,6 +3934,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PLA";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PLA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // PLA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // PLA instruction sets Z flag to M flag value
@@ -3718,6 +3951,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PLX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PLX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // PLX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // PLX instruction sets Z flag to X flag value
@@ -3734,6 +3968,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PLY";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PLY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // PLY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // PLY instruction sets Z flag to X flag value
@@ -3750,6 +3985,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHB";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHB_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3764,6 +4000,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHD";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHD_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3778,6 +4015,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHK";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHK_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3792,6 +4030,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PHP";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PHP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3806,6 +4045,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PLB";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PLB_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // PLB instruction sets N flag to * flag value
                     std::pair(z_flag, "*"), // PLB instruction sets Z flag to * flag value
@@ -3822,6 +4062,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PLD";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PLD_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // PLD instruction sets N flag to * flag value
                     std::pair(z_flag, "*"), // PLD instruction sets Z flag to * flag value
@@ -3838,6 +4079,7 @@ namespace snes_cpu {
                 instr.mnemonic = "PLP";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = PLP_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // PLP instruction sets N flag to * flag value
                     std::pair(v_flag, "*"), // PLP instruction sets V flag to * flag value
@@ -3860,6 +4102,7 @@ namespace snes_cpu {
                 instr.mnemonic = "STP";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = STP_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3874,6 +4117,7 @@ namespace snes_cpu {
                 instr.mnemonic = "WAI";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = WAI_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3888,6 +4132,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TAX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TAX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // TAX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // TAX instruction sets Z flag to X flag value
@@ -3904,6 +4149,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TAY";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TAY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // TAY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // TAY instruction sets Z flag to X flag value
@@ -3920,6 +4166,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TSX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TSX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // TSX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // TSX instruction sets Z flag to X flag value
@@ -3936,6 +4183,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TXA";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TXA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // TXA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // TXA instruction sets Z flag to M flag value
@@ -3952,6 +4200,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TXS";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TXS_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -3966,6 +4215,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TXY";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TXY_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // TXY instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // TXY instruction sets Z flag to X flag value
@@ -3982,6 +4232,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TYA";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TYA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "m"), // TYA instruction sets N flag to M flag value
                     std::pair(z_flag, "m"), // TYA instruction sets Z flag to M flag value
@@ -3998,6 +4249,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TYX";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TYX_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "x"), // TYX instruction sets N flag to X flag value
                     std::pair(z_flag, "x"), // TYX instruction sets Z flag to X flag value
@@ -4014,6 +4266,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TCD";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TCD_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // TCD instruction sets N flag to * flag value
                     std::pair(z_flag, "*"), // TCD instruction sets Z flag to * flag value
@@ -4030,6 +4283,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TCS";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TCS_execute;
                 instr.flags_set = {
                 };
                 for (uint8_t i = 0; i < instr.length - m_val; i++) {
@@ -4044,6 +4298,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TDC";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TDC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // TDC instruction sets N flag to * flag value
                     std::pair(z_flag, "*"), // TDC instruction sets Z flag to * flag value
@@ -4060,6 +4315,7 @@ namespace snes_cpu {
                 instr.mnemonic = "TSC";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = TSC_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // TSC instruction sets N flag to * flag value
                     std::pair(z_flag, "*"), // TSC instruction sets Z flag to * flag value
@@ -4076,6 +4332,7 @@ namespace snes_cpu {
                 instr.mnemonic = "XBA";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = XBA_execute;
                 instr.flags_set = {
                     std::pair(n_flag, "*"), // XBA instruction sets N flag to * flag value
                     std::pair(z_flag, "*"), // XBA instruction sets Z flag to * flag value
@@ -4092,6 +4349,7 @@ namespace snes_cpu {
                 instr.mnemonic = "XCE";
                 instr.length = 1 - m_val;
                 instr.mode = implied;
+                instr.callback = XCE_execute;
                 instr.flags_set = {
                     std::pair(c_flag, "*"), // XCE instruction sets C flag to * flag value
                     std::pair(e_flag, "*"), // XCE instruction sets E flag to * flag value
