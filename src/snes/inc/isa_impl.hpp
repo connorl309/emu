@@ -1,198 +1,372 @@
 #ifndef ISA_IMPL_HPP
 #define ISA_IMPL_HPP
-
 #include "isa.hpp"
 
-/**
- * Everything relating to the 65c816 CPU
- * Instructions, addressing modes, regfiles, execution, etc
-*/
-namespace snes_cpu
-{
+namespace snes_cpu {
 
-// Execute an ADC instruction from current register states
-void ADC_execute(cpu_registers& regfile);
-// Execute an SBC instruction from current register states
-void SBC_execute(cpu_registers& regfile);
-// Execute an CMP instruction from current register states
-void CMP_execute(cpu_registers& regfile);
-// Execute an CPX instruction from current register states
-void CPX_execute(cpu_registers& regfile);
-// Execute an CPY instruction from current register states
-void CPY_execute(cpu_registers& regfile);
-// Execute an DEC instruction from current register states
-void DEC_execute(cpu_registers& regfile);
-// Execute an DEX instruction from current register states
-void DEX_execute(cpu_registers& regfile);
-// Execute an DEY instruction from current register states
-void DEY_execute(cpu_registers& regfile);
-// Execute an INC instruction from current register states
-void INC_execute(cpu_registers& regfile);
-// Execute an INX instruction from current register states
-void INX_execute(cpu_registers& regfile);
-// Execute an INY instruction from current register states
-void INY_execute(cpu_registers& regfile);
-// Execute an AND instruction from current register states
-void AND_execute(cpu_registers& regfile);
-// Execute an EOR instruction from current register states
-void EOR_execute(cpu_registers& regfile);
-// Execute an ORA instruction from current register states
-void ORA_execute(cpu_registers& regfile);
-// Execute an BIT instruction from current register states
-void BIT_execute(cpu_registers& regfile);
-// Execute an TRB instruction from current register states
-void TRB_execute(cpu_registers& regfile);
-// Execute an TSB instruction from current register states
-void TSB_execute(cpu_registers& regfile);
-// Execute an ASL instruction from current register states
-void ASL_execute(cpu_registers& regfile);
-// Execute an LSR instruction from current register states
-void LSR_execute(cpu_registers& regfile);
-// Execute an ROL instruction from current register states
-void ROL_execute(cpu_registers& regfile);
-// Execute an ROR instruction from current register states
-void ROR_execute(cpu_registers& regfile);
-// Execute an BCC instruction from current register states
-void BCC_execute(cpu_registers& regfile);
-// Execute an BCS instruction from current register states
-void BCS_execute(cpu_registers& regfile);
-// Execute an BEQ instruction from current register states
-void BEQ_execute(cpu_registers& regfile);
-// Execute an BMI instruction from current register states
-void BMI_execute(cpu_registers& regfile);
-// Execute an BNE instruction from current register states
-void BNE_execute(cpu_registers& regfile);
-// Execute an BPL instruction from current register states
-void BPL_execute(cpu_registers& regfile);
-// Execute an BRA instruction from current register states
-void BRA_execute(cpu_registers& regfile);
-// Execute an BVC instruction from current register states
-void BVC_execute(cpu_registers& regfile);
-// Execute an BVS instruction from current register states
-void BVS_execute(cpu_registers& regfile);
-// Execute an BRL instruction from current register states
-void BRL_execute(cpu_registers& regfile);
-// Execute an JMP instruction from current register states
-void JMP_execute(cpu_registers& regfile);
-// Execute an JSL instruction from current register states
-void JSL_execute(cpu_registers& regfile);
-// Execute an JSR instruction from current register states
-void JSR_execute(cpu_registers& regfile);
-// Execute an RTL instruction from current register states
-void RTL_execute(cpu_registers& regfile);
-// Execute an RTS instruction from current register states
-void RTS_execute(cpu_registers& regfile);
-// Execute an BRK instruction from current register states
-void BRK_execute(cpu_registers& regfile);
-// Execute an COP instruction from current register states
-void COP_execute(cpu_registers& regfile);
-// Execute an RTI instruction from current register states
-void RTI_execute(cpu_registers& regfile);
-// Execute an CLC instruction from current register states
-void CLC_execute(cpu_registers& regfile);
-// Execute an CLD instruction from current register states
-void CLD_execute(cpu_registers& regfile);
-// Execute an CLI instruction from current register states
-void CLI_execute(cpu_registers& regfile);
-// Execute an CLV instruction from current register states
-void CLV_execute(cpu_registers& regfile);
-// Execute an SEC instruction from current register states
-void SEC_execute(cpu_registers& regfile);
-// Execute an SED instruction from current register states
-void SED_execute(cpu_registers& regfile);
-// Execute an SEI instruction from current register states
-void SEI_execute(cpu_registers& regfile);
-// Execute an REP instruction from current register states
-void REP_execute(cpu_registers& regfile);
-// Execute an SEP instruction from current register states
-void SEP_execute(cpu_registers& regfile);
-// Execute an LDA instruction from current register states
-void LDA_execute(cpu_registers& regfile);
-// Execute an LDX instruction from current register states
-void LDX_execute(cpu_registers& regfile);
-// Execute an LDY instruction from current register states
-void LDY_execute(cpu_registers& regfile);
-// Execute an STA instruction from current register states
-void STA_execute(cpu_registers& regfile);
-// Execute an STX instruction from current register states
-void STX_execute(cpu_registers& regfile);
-// Execute an STY instruction from current register states
-void STY_execute(cpu_registers& regfile);
-// Execute an STZ instruction from current register states
-void STZ_execute(cpu_registers& regfile);
-// Execute an MVN instruction from current register states
-void MVN_execute(cpu_registers& regfile);
-// Execute an MVP instruction from current register states
-void MVP_execute(cpu_registers& regfile);
-// Execute an NOP instruction from current register states
-void NOP_execute(cpu_registers& regfile);
-// Execute an WDM instruction from current register states
-void WDM_execute(cpu_registers& regfile);
-// Execute an PEA instruction from current register states
-void PEA_execute(cpu_registers& regfile);
-// Execute an PEI instruction from current register states
-void PEI_execute(cpu_registers& regfile);
-// Execute an PER instruction from current register states
-void PER_execute(cpu_registers& regfile);
-// Execute an PHA instruction from current register states
-void PHA_execute(cpu_registers& regfile);
-// Execute an PHX instruction from current register states
-void PHX_execute(cpu_registers& regfile);
-// Execute an PHY instruction from current register states
-void PHY_execute(cpu_registers& regfile);
-// Execute an PLA instruction from current register states
-void PLA_execute(cpu_registers& regfile);
-// Execute an PLX instruction from current register states
-void PLX_execute(cpu_registers& regfile);
-// Execute an PLY instruction from current register states
-void PLY_execute(cpu_registers& regfile);
-// Execute an PHB instruction from current register states
-void PHB_execute(cpu_registers& regfile);
-// Execute an PHD instruction from current register states
-void PHD_execute(cpu_registers& regfile);
-// Execute an PHK instruction from current register states
-void PHK_execute(cpu_registers& regfile);
-// Execute an PHP instruction from current register states
-void PHP_execute(cpu_registers& regfile);
-// Execute an PLB instruction from current register states
-void PLB_execute(cpu_registers& regfile);
-// Execute an PLD instruction from current register states
-void PLD_execute(cpu_registers& regfile);
-// Execute an PLP instruction from current register states
-void PLP_execute(cpu_registers& regfile);
-// Execute an STP instruction from current register states
-void STP_execute(cpu_registers& regfile);
-// Execute an WAI instruction from current register states
-void WAI_execute(cpu_registers& regfile);
-// Execute an TAX instruction from current register states
-void TAX_execute(cpu_registers& regfile);
-// Execute an TAY instruction from current register states
-void TAY_execute(cpu_registers& regfile);
-// Execute an TSX instruction from current register states
-void TSX_execute(cpu_registers& regfile);
-// Execute an TXA instruction from current register states
-void TXA_execute(cpu_registers& regfile);
-// Execute an TXS instruction from current register states
-void TXS_execute(cpu_registers& regfile);
-// Execute an TXY instruction from current register states
-void TXY_execute(cpu_registers& regfile);
-// Execute an TYA instruction from current register states
-void TYA_execute(cpu_registers& regfile);
-// Execute an TYX instruction from current register states
-void TYX_execute(cpu_registers& regfile);
-// Execute an TCD instruction from current register states
-void TCD_execute(cpu_registers& regfile);
-// Execute an TCS instruction from current register states
-void TCS_execute(cpu_registers& regfile);
-// Execute an TDC instruction from current register states
-void TDC_execute(cpu_registers& regfile);
-// Execute an TSC instruction from current register states
-void TSC_execute(cpu_registers& regfile);
-// Execute an XBA instruction from current register states
-void XBA_execute(cpu_registers& regfile);
-// Execute an XCE instruction from current register states
-void XCE_execute(cpu_registers& regfile);
+	// Parse and execute a ADC instruction from starting memory address
+	instruction ADC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void ADC_execute(cpu_registers& regfile);
+
+	// Parse and execute a SBC instruction from starting memory address
+	instruction SBC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void SBC_execute(cpu_registers& regfile);
+
+	// Parse and execute a CMP instruction from starting memory address
+	instruction CMP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CMP_execute(cpu_registers& regfile);
+
+	// Parse and execute a CPX instruction from starting memory address
+	instruction CPX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CPX_execute(cpu_registers& regfile);
+
+	// Parse and execute a CPY instruction from starting memory address
+	instruction CPY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CPY_execute(cpu_registers& regfile);
+
+	// Parse and execute a DEC instruction from starting memory address
+	instruction DEC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void DEC_execute(cpu_registers& regfile);
+
+	// Parse and execute a DEX instruction from starting memory address
+	instruction DEX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void DEX_execute(cpu_registers& regfile);
+
+	// Parse and execute a DEY instruction from starting memory address
+	instruction DEY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void DEY_execute(cpu_registers& regfile);
+
+	// Parse and execute a INC instruction from starting memory address
+	instruction INC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void INC_execute(cpu_registers& regfile);
+
+	// Parse and execute a INX instruction from starting memory address
+	instruction INX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void INX_execute(cpu_registers& regfile);
+
+	// Parse and execute a INY instruction from starting memory address
+	instruction INY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void INY_execute(cpu_registers& regfile);
+
+	// Parse and execute a AND instruction from starting memory address
+	instruction AND_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void AND_execute(cpu_registers& regfile);
+
+	// Parse and execute a EOR instruction from starting memory address
+	instruction EOR_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void EOR_execute(cpu_registers& regfile);
+
+	// Parse and execute a ORA instruction from starting memory address
+	instruction ORA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void ORA_execute(cpu_registers& regfile);
+
+	// Parse and execute a BIT instruction from starting memory address
+	instruction BIT_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BIT_execute(cpu_registers& regfile);
+
+	// Parse and execute a TRB instruction from starting memory address
+	instruction TRB_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TRB_execute(cpu_registers& regfile);
+
+	// Parse and execute a TSB instruction from starting memory address
+	instruction TSB_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TSB_execute(cpu_registers& regfile);
+
+	// Parse and execute a ASL instruction from starting memory address
+	instruction ASL_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void ASL_execute(cpu_registers& regfile);
+
+	// Parse and execute a LSR instruction from starting memory address
+	instruction LSR_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void LSR_execute(cpu_registers& regfile);
+
+	// Parse and execute a ROL instruction from starting memory address
+	instruction ROL_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void ROL_execute(cpu_registers& regfile);
+
+	// Parse and execute a ROR instruction from starting memory address
+	instruction ROR_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void ROR_execute(cpu_registers& regfile);
+
+	// Parse and execute a BCC instruction from starting memory address
+	instruction BCC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BCC_execute(cpu_registers& regfile);
+
+	// Parse and execute a BCS instruction from starting memory address
+	instruction BCS_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BCS_execute(cpu_registers& regfile);
+
+	// Parse and execute a BEQ instruction from starting memory address
+	instruction BEQ_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BEQ_execute(cpu_registers& regfile);
+
+	// Parse and execute a BMI instruction from starting memory address
+	instruction BMI_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BMI_execute(cpu_registers& regfile);
+
+	// Parse and execute a BNE instruction from starting memory address
+	instruction BNE_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BNE_execute(cpu_registers& regfile);
+
+	// Parse and execute a BPL instruction from starting memory address
+	instruction BPL_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BPL_execute(cpu_registers& regfile);
+
+	// Parse and execute a BRA instruction from starting memory address
+	instruction BRA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BRA_execute(cpu_registers& regfile);
+
+	// Parse and execute a BVC instruction from starting memory address
+	instruction BVC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BVC_execute(cpu_registers& regfile);
+
+	// Parse and execute a BVS instruction from starting memory address
+	instruction BVS_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BVS_execute(cpu_registers& regfile);
+
+	// Parse and execute a BRL instruction from starting memory address
+	instruction BRL_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BRL_execute(cpu_registers& regfile);
+
+	// Parse and execute a JMP instruction from starting memory address
+	instruction JMP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void JMP_execute(cpu_registers& regfile);
+
+	// Parse and execute a JSL instruction from starting memory address
+	instruction JSL_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void JSL_execute(cpu_registers& regfile);
+
+	// Parse and execute a JSR instruction from starting memory address
+	instruction JSR_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void JSR_execute(cpu_registers& regfile);
+
+	// Parse and execute a RTL instruction from starting memory address
+	instruction RTL_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void RTL_execute(cpu_registers& regfile);
+
+	// Parse and execute a RTS instruction from starting memory address
+	instruction RTS_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void RTS_execute(cpu_registers& regfile);
+
+	// Parse and execute a BRK instruction from starting memory address
+	instruction BRK_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void BRK_execute(cpu_registers& regfile);
+
+	// Parse and execute a COP instruction from starting memory address
+	instruction COP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void COP_execute(cpu_registers& regfile);
+
+	// Parse and execute a RTI instruction from starting memory address
+	instruction RTI_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void RTI_execute(cpu_registers& regfile);
+
+	// Parse and execute a CLC instruction from starting memory address
+	instruction CLC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CLC_execute(cpu_registers& regfile);
+
+	// Parse and execute a CLD instruction from starting memory address
+	instruction CLD_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CLD_execute(cpu_registers& regfile);
+
+	// Parse and execute a CLI instruction from starting memory address
+	instruction CLI_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CLI_execute(cpu_registers& regfile);
+
+	// Parse and execute a CLV instruction from starting memory address
+	instruction CLV_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void CLV_execute(cpu_registers& regfile);
+
+	// Parse and execute a SEC instruction from starting memory address
+	instruction SEC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void SEC_execute(cpu_registers& regfile);
+
+	// Parse and execute a SED instruction from starting memory address
+	instruction SED_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void SED_execute(cpu_registers& regfile);
+
+	// Parse and execute a SEI instruction from starting memory address
+	instruction SEI_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void SEI_execute(cpu_registers& regfile);
+
+	// Parse and execute a REP instruction from starting memory address
+	instruction REP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void REP_execute(cpu_registers& regfile);
+
+	// Parse and execute a SEP instruction from starting memory address
+	instruction SEP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void SEP_execute(cpu_registers& regfile);
+
+	// Parse and execute a LDA instruction from starting memory address
+	instruction LDA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void LDA_execute(cpu_registers& regfile);
+
+	// Parse and execute a LDX instruction from starting memory address
+	instruction LDX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void LDX_execute(cpu_registers& regfile);
+
+	// Parse and execute a LDY instruction from starting memory address
+	instruction LDY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void LDY_execute(cpu_registers& regfile);
+
+	// Parse and execute a STA instruction from starting memory address
+	instruction STA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void STA_execute(cpu_registers& regfile);
+
+	// Parse and execute a STX instruction from starting memory address
+	instruction STX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void STX_execute(cpu_registers& regfile);
+
+	// Parse and execute a STY instruction from starting memory address
+	instruction STY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void STY_execute(cpu_registers& regfile);
+
+	// Parse and execute a STZ instruction from starting memory address
+	instruction STZ_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void STZ_execute(cpu_registers& regfile);
+
+	// Parse and execute a MVN instruction from starting memory address
+	instruction MVN_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void MVN_execute(cpu_registers& regfile);
+
+	// Parse and execute a MVP instruction from starting memory address
+	instruction MVP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void MVP_execute(cpu_registers& regfile);
+
+	// Parse and execute a NOP instruction from starting memory address
+	instruction NOP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void NOP_execute(cpu_registers& regfile);
+
+	// Parse and execute a WDM instruction from starting memory address
+	instruction WDM_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void WDM_execute(cpu_registers& regfile);
+
+	// Parse and execute a PEA instruction from starting memory address
+	instruction PEA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PEA_execute(cpu_registers& regfile);
+
+	// Parse and execute a PEI instruction from starting memory address
+	instruction PEI_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PEI_execute(cpu_registers& regfile);
+
+	// Parse and execute a PER instruction from starting memory address
+	instruction PER_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PER_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHA instruction from starting memory address
+	instruction PHA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHA_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHX instruction from starting memory address
+	instruction PHX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHX_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHY instruction from starting memory address
+	instruction PHY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHY_execute(cpu_registers& regfile);
+
+	// Parse and execute a PLA instruction from starting memory address
+	instruction PLA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PLA_execute(cpu_registers& regfile);
+
+	// Parse and execute a PLX instruction from starting memory address
+	instruction PLX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PLX_execute(cpu_registers& regfile);
+
+	// Parse and execute a PLY instruction from starting memory address
+	instruction PLY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PLY_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHB instruction from starting memory address
+	instruction PHB_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHB_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHD instruction from starting memory address
+	instruction PHD_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHD_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHK instruction from starting memory address
+	instruction PHK_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHK_execute(cpu_registers& regfile);
+
+	// Parse and execute a PHP instruction from starting memory address
+	instruction PHP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PHP_execute(cpu_registers& regfile);
+
+	// Parse and execute a PLB instruction from starting memory address
+	instruction PLB_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PLB_execute(cpu_registers& regfile);
+
+	// Parse and execute a PLD instruction from starting memory address
+	instruction PLD_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PLD_execute(cpu_registers& regfile);
+
+	// Parse and execute a PLP instruction from starting memory address
+	instruction PLP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void PLP_execute(cpu_registers& regfile);
+
+	// Parse and execute a STP instruction from starting memory address
+	instruction STP_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void STP_execute(cpu_registers& regfile);
+
+	// Parse and execute a WAI instruction from starting memory address
+	instruction WAI_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void WAI_execute(cpu_registers& regfile);
+
+	// Parse and execute a TAX instruction from starting memory address
+	instruction TAX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TAX_execute(cpu_registers& regfile);
+
+	// Parse and execute a TAY instruction from starting memory address
+	instruction TAY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TAY_execute(cpu_registers& regfile);
+
+	// Parse and execute a TSX instruction from starting memory address
+	instruction TSX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TSX_execute(cpu_registers& regfile);
+
+	// Parse and execute a TXA instruction from starting memory address
+	instruction TXA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TXA_execute(cpu_registers& regfile);
+
+	// Parse and execute a TXS instruction from starting memory address
+	instruction TXS_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TXS_execute(cpu_registers& regfile);
+
+	// Parse and execute a TXY instruction from starting memory address
+	instruction TXY_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TXY_execute(cpu_registers& regfile);
+
+	// Parse and execute a TYA instruction from starting memory address
+	instruction TYA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TYA_execute(cpu_registers& regfile);
+
+	// Parse and execute a TYX instruction from starting memory address
+	instruction TYX_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TYX_execute(cpu_registers& regfile);
+
+	// Parse and execute a TCD instruction from starting memory address
+	instruction TCD_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TCD_execute(cpu_registers& regfile);
+
+	// Parse and execute a TCS instruction from starting memory address
+	instruction TCS_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TCS_execute(cpu_registers& regfile);
+
+	// Parse and execute a TDC instruction from starting memory address
+	instruction TDC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TDC_execute(cpu_registers& regfile);
+
+	// Parse and execute a TSC instruction from starting memory address
+	instruction TSC_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void TSC_execute(cpu_registers& regfile);
+
+	// Parse and execute a XBA instruction from starting memory address
+	instruction XBA_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void XBA_execute(cpu_registers& regfile);
+
+	// Parse and execute a XCE instruction from starting memory address
+	instruction XCE_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);
+	void XCE_execute(cpu_registers& regfile);
 
 }
-
 #endif
