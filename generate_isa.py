@@ -98,10 +98,11 @@ def printParseCppFile(f: TextIOWrapper, mnem: str):
     f.write(f"instruction {mnem.upper()}_parse_instr(uint8_t* memory_address, uint8_t m_flag_val)" + " {\n")
     f.write("\tsnes_cpu::instruction instr;\n\n\tswitch ( *memory_address ) {\n")
 
-GENERATE_PARSE_FILES = True
-GENERATE_ISA_TOPLEVEL = True
+GENERATE_PARSE_FILES = False
+GENERATE_ISA_TOPLEVEL = False
 GENERATE_ISA_IMPL_HEADER = True
 GENERATE_ISA_EXECUTE_FUNCS = True
+GENERATE_ISA_EXEC_MAP = True
 
 if __name__ == "__main__":
     isa_list: List[instr] = []
@@ -184,7 +185,7 @@ if __name__ == "__main__":
             for i in instruction_list:
                 outputter.write(f"\n\t// Parse and execute a {str(i).upper()} instruction from starting memory address\n")
                 outputter.write(f"\tinstruction {str(i).upper()}_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);\n")
-                outputter.write(f"\tvoid {str(i).upper()}_execute(cpu_registers& regfile);\n")
+                outputter.write(f"\tvoid {str(i).upper()}_execute(const instruction& toExec, cpu_registers& regfile);\n")
             outputter.write("\n}\n#endif")
             outputter.close()
         # Generate the execute file
@@ -193,5 +194,18 @@ if __name__ == "__main__":
             outputter.write("#include \"../inc/isa.hpp\"\n#include \"../inc/isa_impl.hpp\"")
             outputter.write("\n\nnamespace snes_cpu {\n")
             for i in instruction_list:
-                outputter.write(f"\n\tvoid {str(i).upper()}_execute(cpu_registers& regfile) " + "{\n\n\t}\n")
+                outputter.write(f"\n\tvoid {str(i).upper()}_execute(const instruction& toExec, cpu_registers& regfile) " + "{\n\n\t}\n")
             outputter.write("\n}")
+            outputter.close()
+        # Generate execute() map
+        if (GENERATE_ISA_EXEC_MAP):
+            outputter = open("isa_execute_map.txt", "w+")
+            outputter.write("static const std::map<std::string, std::function<void(const instruction&, cpu_registers&)>> exec_map = {\n")
+            exec_list: Dict[str, str] = {}
+            ctr = 0
+            for i in instruction_list:
+                outputter.write("\t{" + f"\"{str(i).upper()}\", {str(i).upper()}_execute" + "}, ")
+                ctr += 1
+                if (ctr == 6):
+                    outputter.write("\n")
+                    ctr = 0

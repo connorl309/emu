@@ -149,8 +149,10 @@ typedef struct {
     std::function<void(cpu_registers&)> callback;
 } instruction;
 
-// Create an instruction
-instruction parseInstruction(uint8_t* memory_address, cpu_registers& regfile);
+// Create an instruction (see parse/*.cpp, isa.cpp)
+instruction parseInstruction(uint8_t* memory_address, uint8_t m_flag_val);
+// Execute an instruction (see isa_execute.cpp, isa.cpp)
+void executeInstruction(const instruction& toExec, cpu_registers& regfile);
 
 // Helper macro for byte manipulation
 // SET_BYTE(0, 0xFF, 2) would yield 0xFF00000

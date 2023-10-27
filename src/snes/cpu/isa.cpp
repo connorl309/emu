@@ -4,7 +4,7 @@
 
 namespace snes_cpu {
 
-// May not be needed.
+// opcode -> instruction parse function map.
 static const std::map<uint8_t, std::function<instruction(uint8_t*, uint8_t)>> parse_map = {
 	{0x61,ADC_parse_instr}, 	{0x63,ADC_parse_instr}, 	{0x65,ADC_parse_instr}, 	{0x67,ADC_parse_instr}, 	{0x69,ADC_parse_instr}, 	{0x6D,ADC_parse_instr}, 	{0x6F,ADC_parse_instr}, 	{0x71,ADC_parse_instr}, 
 	{0x72,ADC_parse_instr}, 	{0x73,ADC_parse_instr}, 	{0x75,ADC_parse_instr}, 	{0x77,ADC_parse_instr}, 	{0x79,ADC_parse_instr}, 	{0x7D,ADC_parse_instr}, 	{0x7F,ADC_parse_instr}, 	{0xE1,SBC_parse_instr}, 
@@ -40,13 +40,38 @@ static const std::map<uint8_t, std::function<instruction(uint8_t*, uint8_t)>> pa
 	{0x98,TYA_parse_instr}, 	{0xBB,TYX_parse_instr}, 	{0x5B,TCD_parse_instr}, 	{0x1B,TCS_parse_instr}, 	{0x7B,TDC_parse_instr}, 	{0x3B,TSC_parse_instr}, 	{0xEB,XBA_parse_instr}, 	{0xFB,XCE_parse_instr}, 
 };
 
+// mnemonic -> execution function map
+static const std::map<std::string, std::function<void(const instruction&, cpu_registers&)>> exec_map = {
+	{"ADC", ADC_execute}, 	{"SBC", SBC_execute}, 	{"CMP", CMP_execute}, 	{"CPX", CPX_execute}, 	{"CPY", CPY_execute}, 	{"DEC", DEC_execute}, 
+	{"DEX", DEX_execute}, 	{"DEY", DEY_execute}, 	{"INC", INC_execute}, 	{"INX", INX_execute}, 	{"INY", INY_execute}, 	{"AND", AND_execute}, 
+	{"EOR", EOR_execute}, 	{"ORA", ORA_execute}, 	{"BIT", BIT_execute}, 	{"TRB", TRB_execute}, 	{"TSB", TSB_execute}, 	{"ASL", ASL_execute}, 
+	{"LSR", LSR_execute}, 	{"ROL", ROL_execute}, 	{"ROR", ROR_execute}, 	{"BCC", BCC_execute}, 	{"BCS", BCS_execute}, 	{"BEQ", BEQ_execute}, 
+	{"BMI", BMI_execute}, 	{"BNE", BNE_execute}, 	{"BPL", BPL_execute}, 	{"BRA", BRA_execute}, 	{"BVC", BVC_execute}, 	{"BVS", BVS_execute}, 
+	{"BRL", BRL_execute}, 	{"JMP", JMP_execute}, 	{"JSL", JSL_execute}, 	{"JSR", JSR_execute}, 	{"RTL", RTL_execute}, 	{"RTS", RTS_execute}, 
+	{"BRK", BRK_execute}, 	{"COP", COP_execute}, 	{"RTI", RTI_execute}, 	{"CLC", CLC_execute}, 	{"CLD", CLD_execute}, 	{"CLI", CLI_execute}, 
+	{"CLV", CLV_execute}, 	{"SEC", SEC_execute}, 	{"SED", SED_execute}, 	{"SEI", SEI_execute}, 	{"REP", REP_execute}, 	{"SEP", SEP_execute}, 
+	{"LDA", LDA_execute}, 	{"LDX", LDX_execute}, 	{"LDY", LDY_execute}, 	{"STA", STA_execute}, 	{"STX", STX_execute}, 	{"STY", STY_execute}, 
+	{"STZ", STZ_execute}, 	{"MVN", MVN_execute}, 	{"MVP", MVP_execute}, 	{"NOP", NOP_execute}, 	{"WDM", WDM_execute}, 	{"PEA", PEA_execute}, 
+	{"PEI", PEI_execute}, 	{"PER", PER_execute}, 	{"PHA", PHA_execute}, 	{"PHX", PHX_execute}, 	{"PHY", PHY_execute}, 	{"PLA", PLA_execute}, 
+	{"PLX", PLX_execute}, 	{"PLY", PLY_execute}, 	{"PHB", PHB_execute}, 	{"PHD", PHD_execute}, 	{"PHK", PHK_execute}, 	{"PHP", PHP_execute}, 
+	{"PLB", PLB_execute}, 	{"PLD", PLD_execute}, 	{"PLP", PLP_execute}, 	{"STP", STP_execute}, 	{"WAI", WAI_execute}, 	{"TAX", TAX_execute}, 
+	{"TAY", TAY_execute}, 	{"TSX", TSX_execute}, 	{"TXA", TXA_execute}, 	{"TXS", TXS_execute}, 	{"TXY", TXY_execute}, 	{"TYA", TYA_execute}, 
+	{"TYX", TYX_execute}, 	{"TCD", TCD_execute}, 	{"TCS", TCS_execute}, 	{"TDC", TDC_execute}, 	{"TSC", TSC_execute}, 	{"XBA", XBA_execute}, 
+	{"XCE", XCE_execute}, 
+};
+
+// Parse an instruction
 instruction parseInstruction(uint8_t* memory_address, uint8_t m_flag_val) {
 	instruction instr;
-	
 	std::function<instruction(uint8_t*, uint8_t)> parseCall = parse_map.at(*memory_address);
 	instr = parseCall(memory_address, m_flag_val);
-
 	return instr;
+}
+
+// Execute an instruction
+void executeInstruction(const instruction& toExec, cpu_registers& regfile) {
+	std::function<void(const instruction&, cpu_registers&)> execCall = exec_map.at(toExec.mnemonic);
+	execCall(toExec, regfile);
 }
 
 }
