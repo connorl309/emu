@@ -15,7 +15,6 @@ instruction SEI_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "SEI";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = SEI_execute;
 			instr.flags_set = {
 				std::pair(i_flag, "1"), // SEI instruction sets I flag to 1 flag value
 			};

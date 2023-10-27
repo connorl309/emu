@@ -15,7 +15,6 @@ instruction BMI_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BMI";
 			instr.length = 2;
 			instr.mode = rel8;
-			instr.callback = BMI_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

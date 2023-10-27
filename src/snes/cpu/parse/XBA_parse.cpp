@@ -15,7 +15,6 @@ instruction XBA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "XBA";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = XBA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "*"), // XBA instruction sets N flag to * flag value
 				std::pair(z_flag, "*"), // XBA instruction sets Z flag to * flag value

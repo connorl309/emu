@@ -15,7 +15,6 @@ instruction TYX_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TYX";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = TYX_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // TYX instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // TYX instruction sets Z flag to X flag value

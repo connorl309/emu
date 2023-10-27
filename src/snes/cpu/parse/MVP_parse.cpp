@@ -15,7 +15,6 @@ instruction MVP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "MVP";
 			instr.length = 3;
 			instr.mode = src_dest;
-			instr.callback = MVP_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

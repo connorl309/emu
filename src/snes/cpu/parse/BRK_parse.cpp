@@ -15,7 +15,6 @@ instruction BRK_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BRK";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = BRK_execute;
 			instr.flags_set = {
 				std::pair(d_flag, "0"), // BRK instruction sets D flag to 0 flag value
 				std::pair(i_flag, "1"), // BRK instruction sets I flag to 1 flag value

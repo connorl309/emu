@@ -15,7 +15,6 @@ instruction ROL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ROL";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = ROL_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -33,7 +32,6 @@ instruction ROL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ROL";
 			instr.length = 1;
 			instr.mode = accumulator;
-			instr.callback = ROL_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -51,7 +49,6 @@ instruction ROL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ROL";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = ROL_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -69,7 +66,6 @@ instruction ROL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ROL";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = ROL_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value
@@ -87,7 +83,6 @@ instruction ROL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ROL";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = ROL_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ROL instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ROL instruction sets Z flag to M flag value

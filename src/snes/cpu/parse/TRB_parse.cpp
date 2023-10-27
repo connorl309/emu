@@ -15,7 +15,6 @@ instruction TRB_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TRB";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = TRB_execute;
 			instr.flags_set = {
 				std::pair(z_flag, "m"), // TRB instruction sets Z flag to M flag value
 			};
@@ -31,7 +30,6 @@ instruction TRB_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TRB";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = TRB_execute;
 			instr.flags_set = {
 				std::pair(z_flag, "m"), // TRB instruction sets Z flag to M flag value
 			};

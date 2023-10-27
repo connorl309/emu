@@ -15,7 +15,6 @@ instruction CPY_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CPY";
 			instr.length = 3 - m_flag_val;
 			instr.mode = immediate;
-			instr.callback = CPY_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // CPY instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // CPY instruction sets Z flag to X flag value
@@ -33,7 +32,6 @@ instruction CPY_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CPY";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = CPY_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // CPY instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // CPY instruction sets Z flag to X flag value
@@ -51,7 +49,6 @@ instruction CPY_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CPY";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = CPY_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // CPY instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // CPY instruction sets Z flag to X flag value

@@ -15,7 +15,6 @@ instruction BIT_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BIT";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = BIT_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
 				std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -33,7 +32,6 @@ instruction BIT_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BIT";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = BIT_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
 				std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -51,7 +49,6 @@ instruction BIT_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BIT";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = BIT_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
 				std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -69,7 +66,6 @@ instruction BIT_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BIT";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = BIT_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // BIT instruction sets N flag to M flag value
 				std::pair(v_flag, "m"), // BIT instruction sets V flag to M flag value
@@ -87,7 +83,6 @@ instruction BIT_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BIT";
 			instr.length = 3 - m_flag_val;
 			instr.mode = immediate;
-			instr.callback = BIT_execute;
 			instr.flags_set = {
 				std::pair(z_flag, "m"), // BIT instruction sets Z flag to M flag value
 			};

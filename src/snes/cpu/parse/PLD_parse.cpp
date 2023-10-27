@@ -15,7 +15,6 @@ instruction PLD_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "PLD";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = PLD_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "*"), // PLD instruction sets N flag to * flag value
 				std::pair(z_flag, "*"), // PLD instruction sets Z flag to * flag value

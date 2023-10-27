@@ -15,7 +15,6 @@ instruction PER_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "PER";
 			instr.length = 3;
 			instr.mode = immediate;
-			instr.callback = PER_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

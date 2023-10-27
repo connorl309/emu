@@ -15,7 +15,6 @@ instruction RTI_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "RTI";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = RTI_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "*"), // RTI instruction sets N flag to * flag value
 				std::pair(v_flag, "*"), // RTI instruction sets V flag to * flag value

@@ -15,7 +15,6 @@ instruction SEP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "SEP";
 			instr.length = 2;
 			instr.mode = immediate;
-			instr.callback = SEP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "*"), // SEP instruction sets N flag to * flag value
 				std::pair(v_flag, "*"), // SEP instruction sets V flag to * flag value

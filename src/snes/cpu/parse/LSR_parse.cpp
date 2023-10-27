@@ -15,7 +15,6 @@ instruction LSR_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "LSR";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = LSR_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
 				std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -33,7 +32,6 @@ instruction LSR_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "LSR";
 			instr.length = 1;
 			instr.mode = accumulator;
-			instr.callback = LSR_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
 				std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -51,7 +49,6 @@ instruction LSR_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "LSR";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = LSR_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
 				std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -69,7 +66,6 @@ instruction LSR_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "LSR";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = LSR_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
 				std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value
@@ -87,7 +83,6 @@ instruction LSR_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "LSR";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = LSR_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "0"), // LSR instruction sets N flag to 0 flag value
 				std::pair(z_flag, "m"), // LSR instruction sets Z flag to M flag value

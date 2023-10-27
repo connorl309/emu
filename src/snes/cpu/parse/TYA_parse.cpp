@@ -15,7 +15,6 @@ instruction TYA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TYA";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = TYA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // TYA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // TYA instruction sets Z flag to M flag value

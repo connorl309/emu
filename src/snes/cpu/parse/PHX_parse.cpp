@@ -15,7 +15,6 @@ instruction PHX_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "PHX";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = PHX_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

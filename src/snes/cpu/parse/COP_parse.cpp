@@ -15,7 +15,6 @@ instruction COP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "COP";
 			instr.length = 2;
 			instr.mode = immediate;
-			instr.callback = COP_execute;
 			instr.flags_set = {
 				std::pair(d_flag, "0"), // COP instruction sets D flag to 0 flag value
 				std::pair(i_flag, "1"), // COP instruction sets I flag to 1 flag value

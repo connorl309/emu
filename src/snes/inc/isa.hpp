@@ -146,7 +146,6 @@ typedef struct {
     std::string mnemonic; // instruction mnemonic
     std::vector<std::pair<_flags, std::string>> flags_set; // what flags get set on execution
     snes_cpu::addressing_mode mode;
-    std::function<void(cpu_registers&)> callback;
 } instruction;
 
 // Create an instruction (see parse/*.cpp, isa.cpp)

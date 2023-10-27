@@ -15,7 +15,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct_x_paren;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -33,7 +32,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = stack_s;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -51,7 +49,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -69,7 +66,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct_bracket;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -87,7 +83,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 3 - m_flag_val;
 			instr.mode = immediate;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -105,7 +100,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -123,7 +117,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 4;
 			instr.mode = long_;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -141,7 +134,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct_paren_y;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -159,7 +151,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct_paren;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -177,7 +168,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = stack_s_paren_y;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -195,7 +185,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -213,7 +202,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 2;
 			instr.mode = direct_bracket_y;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -231,7 +219,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 3;
 			instr.mode = absolute_y;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -249,7 +236,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value
@@ -267,7 +253,6 @@ instruction CMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CMP";
 			instr.length = 4;
 			instr.mode = long_x;
-			instr.callback = CMP_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // CMP instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // CMP instruction sets Z flag to M flag value

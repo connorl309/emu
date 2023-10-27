@@ -15,7 +15,6 @@ instruction JSL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "JSL";
 			instr.length = 4;
 			instr.mode = long_;
-			instr.callback = JSL_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

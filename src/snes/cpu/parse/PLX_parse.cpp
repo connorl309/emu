@@ -15,7 +15,6 @@ instruction PLX_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "PLX";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = PLX_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // PLX instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // PLX instruction sets Z flag to X flag value

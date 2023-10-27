@@ -15,7 +15,6 @@ instruction PHA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "PHA";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = PHA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

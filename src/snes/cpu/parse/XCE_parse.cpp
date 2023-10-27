@@ -15,7 +15,6 @@ instruction XCE_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "XCE";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = XCE_execute;
 			instr.flags_set = {
 				std::pair(c_flag, "*"), // XCE instruction sets C flag to * flag value
 				std::pair(e_flag, "*"), // XCE instruction sets E flag to * flag value

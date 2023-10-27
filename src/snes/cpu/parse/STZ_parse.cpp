@@ -15,7 +15,6 @@ instruction STZ_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STZ";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = STZ_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -30,7 +29,6 @@ instruction STZ_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STZ";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = STZ_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -45,7 +43,6 @@ instruction STZ_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STZ";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = STZ_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -60,7 +57,6 @@ instruction STZ_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STZ";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = STZ_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

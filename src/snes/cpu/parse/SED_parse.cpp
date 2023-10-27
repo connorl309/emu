@@ -15,7 +15,6 @@ instruction SED_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "SED";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = SED_execute;
 			instr.flags_set = {
 				std::pair(d_flag, "1"), // SED instruction sets D flag to 1 flag value
 			};

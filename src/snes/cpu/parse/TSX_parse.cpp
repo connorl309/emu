@@ -15,7 +15,6 @@ instruction TSX_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TSX";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = TSX_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // TSX instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // TSX instruction sets Z flag to X flag value

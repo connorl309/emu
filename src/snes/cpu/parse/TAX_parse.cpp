@@ -15,7 +15,6 @@ instruction TAX_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TAX";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = TAX_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // TAX instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // TAX instruction sets Z flag to X flag value

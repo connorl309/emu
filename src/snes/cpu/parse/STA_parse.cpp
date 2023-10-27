@@ -15,7 +15,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct_x_paren;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -30,7 +29,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = stack_s;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -45,7 +43,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -60,7 +57,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct_bracket;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -75,7 +71,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -90,7 +85,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 4;
 			instr.mode = long_;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -105,7 +99,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct_paren_y;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -120,7 +113,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct_paren;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -135,7 +127,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = stack_s_paren_y;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -150,7 +141,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -165,7 +155,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 2;
 			instr.mode = direct_bracket_y;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -180,7 +169,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 3;
 			instr.mode = absolute_y;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -195,7 +183,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -210,7 +197,6 @@ instruction STA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "STA";
 			instr.length = 4;
 			instr.mode = long_x;
-			instr.callback = STA_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

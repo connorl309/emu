@@ -72,7 +72,7 @@ class instr():
         else:
             toRet += f"\t\t\tinstr.length = {self.len[0]};\n"
         toRet += f"\t\t\tinstr.mode = {self.mode};\n"
-        toRet += f"\t\t\tinstr.callback = {self.mnemonic.upper()}_execute;\n"
+        #toRet += f"\t\t\tinstr.callback = {self.mnemonic.upper()}_execute;\n"
         # tricky part here is flags
         toRet += "\t\t\tinstr.flags_set = {\n"
         funny = "nvmxdizce"
@@ -98,11 +98,11 @@ def printParseCppFile(f: TextIOWrapper, mnem: str):
     f.write(f"instruction {mnem.upper()}_parse_instr(uint8_t* memory_address, uint8_t m_flag_val)" + " {\n")
     f.write("\tsnes_cpu::instruction instr;\n\n\tswitch ( *memory_address ) {\n")
 
-GENERATE_PARSE_FILES = False
+GENERATE_PARSE_FILES = True
 GENERATE_ISA_TOPLEVEL = False
-GENERATE_ISA_IMPL_HEADER = True
-GENERATE_ISA_EXECUTE_FUNCS = True
-GENERATE_ISA_EXEC_MAP = True
+GENERATE_ISA_IMPL_HEADER = False
+GENERATE_ISA_EXECUTE_FUNCS = False
+GENERATE_ISA_EXEC_MAP = False
 
 if __name__ == "__main__":
     isa_list: List[instr] = []

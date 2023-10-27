@@ -15,7 +15,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct_x_paren;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -32,7 +31,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = stack_s;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -49,7 +47,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -66,7 +63,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct_bracket;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -83,7 +79,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 3 - m_flag_val;
 			instr.mode = immediate;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -100,7 +95,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -117,7 +111,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 4;
 			instr.mode = long_;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -134,7 +127,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct_paren_y;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -151,7 +143,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct_paren;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -168,7 +159,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = stack_s_paren_y;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -185,7 +175,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct_x;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -202,7 +191,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 2;
 			instr.mode = direct_bracket_y;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -219,7 +207,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 3;
 			instr.mode = absolute_y;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -236,7 +223,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 3;
 			instr.mode = absolute_x;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value
@@ -253,7 +239,6 @@ instruction ORA_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "ORA";
 			instr.length = 4;
 			instr.mode = long_x;
-			instr.callback = ORA_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "m"), // ORA instruction sets N flag to M flag value
 				std::pair(z_flag, "m"), // ORA instruction sets Z flag to M flag value

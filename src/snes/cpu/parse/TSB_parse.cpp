@@ -15,7 +15,6 @@ instruction TSB_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TSB";
 			instr.length = 2;
 			instr.mode = direct;
-			instr.callback = TSB_execute;
 			instr.flags_set = {
 				std::pair(z_flag, "m"), // TSB instruction sets Z flag to M flag value
 			};
@@ -31,7 +30,6 @@ instruction TSB_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "TSB";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = TSB_execute;
 			instr.flags_set = {
 				std::pair(z_flag, "m"), // TSB instruction sets Z flag to M flag value
 			};

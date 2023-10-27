@@ -15,7 +15,6 @@ instruction JMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "JMP";
 			instr.length = 3;
 			instr.mode = absolute;
-			instr.callback = JMP_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -30,7 +29,6 @@ instruction JMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "JMP";
 			instr.length = 4;
 			instr.mode = long_;
-			instr.callback = JMP_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -45,7 +43,6 @@ instruction JMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "JMP";
 			instr.length = 3;
 			instr.mode = absolute_paren;
-			instr.callback = JMP_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -60,7 +57,6 @@ instruction JMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "JMP";
 			instr.length = 3;
 			instr.mode = absolute_x_paren;
-			instr.callback = JMP_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
@@ -75,7 +71,6 @@ instruction JMP_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "JMP";
 			instr.length = 3;
 			instr.mode = absolute_bracket;
-			instr.callback = JMP_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {

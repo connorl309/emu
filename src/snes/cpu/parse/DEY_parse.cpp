@@ -15,7 +15,6 @@ instruction DEY_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "DEY";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = DEY_execute;
 			instr.flags_set = {
 				std::pair(n_flag, "x"), // DEY instruction sets N flag to X flag value
 				std::pair(z_flag, "x"), // DEY instruction sets Z flag to X flag value

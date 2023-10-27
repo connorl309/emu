@@ -15,7 +15,6 @@ instruction CLI_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "CLI";
 			instr.length = 1;
 			instr.mode = implied;
-			instr.callback = CLI_execute;
 			instr.flags_set = {
 				std::pair(i_flag, "0"), // CLI instruction sets I flag to 0 flag value
 			};

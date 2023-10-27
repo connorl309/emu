@@ -3,8 +3,35 @@
 
 namespace snes_cpu {
 
+	/*
+	ADC adds to the accumulator
+	When M flag = 0, 16 bit operation
+	When M flag = 1, 8 bit operation
+	When D flag = 0, binary math
+	When D flag = 1, BCD math
+	*/
 	void ADC_execute(const instruction& toExec, cpu_registers& regfile) {
-
+		switch (toExec.mode)
+		{
+			case direct_x_paren: {
+				break;
+			}
+			case stack_s: {
+				break;
+			}
+			case direct: {
+				break;
+			}
+			case direct_bracket: {
+				break;
+			}
+			case immediate: {
+				break;
+			}
+			case absolute: {
+				break;
+			}
+		}
 	}
 
 	void SBC_execute(const instruction& toExec, cpu_registers& regfile) {

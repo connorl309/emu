@@ -15,7 +15,6 @@ instruction BPL_parse_instr(uint8_t* memory_address, uint8_t m_flag_val) {
 			instr.mnemonic = "BPL";
 			instr.length = 2;
 			instr.mode = rel8;
-			instr.callback = BPL_execute;
 			instr.flags_set = {
 			};
 			for (uint8_t i = 1; i < instr.length; i++) {
