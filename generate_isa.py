@@ -101,6 +101,7 @@ def printParseCppFile(f: TextIOWrapper, mnem: str):
 GENERATE_PARSE_FILES = True
 GENERATE_ISA_TOPLEVEL = True
 GENERATE_ISA_IMPL_HEADER = True
+GENERATE_ISA_EXECUTE_FUNCS = True
 
 if __name__ == "__main__":
     isa_list: List[instr] = []
@@ -185,3 +186,12 @@ if __name__ == "__main__":
                 outputter.write(f"\tinstruction {str(i).upper()}_parse_instr(uint8_t* mem_addr, uint8_t m_flag_val);\n")
                 outputter.write(f"\tvoid {str(i).upper()}_execute(cpu_registers& regfile);\n")
             outputter.write("\n}\n#endif")
+            outputter.close()
+        # Generate the execute file
+        if (GENERATE_ISA_EXECUTE_FUNCS):
+            outputter = open("./src/snes/cpu/isa_execute.cpp", "w+")
+            outputter.write("#include \"../inc/isa.hpp\"\n#include \"../inc/isa_impl.hpp\"")
+            outputter.write("\n\nnamespace snes_cpu {\n")
+            for i in instruction_list:
+                outputter.write(f"\n\tvoid {str(i).upper()}_execute(cpu_registers& regfile) " + "{\n\n\t}\n")
+            outputter.write("\n}")

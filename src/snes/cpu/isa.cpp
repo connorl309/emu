@@ -4,8 +4,8 @@
 
 namespace snes_cpu {
 
-// Mapping of opcodes to their parse calls
-static const std::map<uint8_t, std::function<instruction(uint8_t*, uint8_t)>> opc_to_mnemonic = {
+// May not be needed.
+static const std::map<uint8_t, std::function<void(uint8_t*, uint8_t)>> opc_to_mnemonic = {
 	{0x61,ADC_parse_instr}, 	{0x63,ADC_parse_instr}, 	{0x65,ADC_parse_instr}, 	{0x67,ADC_parse_instr}, 	{0x69,ADC_parse_instr}, 	{0x6D,ADC_parse_instr}, 	{0x6F,ADC_parse_instr}, 	{0x71,ADC_parse_instr}, 
 	{0x72,ADC_parse_instr}, 	{0x73,ADC_parse_instr}, 	{0x75,ADC_parse_instr}, 	{0x77,ADC_parse_instr}, 	{0x79,ADC_parse_instr}, 	{0x7D,ADC_parse_instr}, 	{0x7F,ADC_parse_instr}, 	{0xE1,SBC_parse_instr}, 
 	{0xE3,SBC_parse_instr}, 	{0xE5,SBC_parse_instr}, 	{0xE7,SBC_parse_instr}, 	{0xE9,SBC_parse_instr}, 	{0xED,SBC_parse_instr}, 	{0xEF,SBC_parse_instr}, 	{0xF1,SBC_parse_instr}, 	{0xF2,SBC_parse_instr}, 
@@ -40,16 +40,10 @@ static const std::map<uint8_t, std::function<instruction(uint8_t*, uint8_t)>> op
 	{0x98,TYA_parse_instr}, 	{0xBB,TYX_parse_instr}, 	{0x5B,TCD_parse_instr}, 	{0x1B,TCS_parse_instr}, 	{0x7B,TDC_parse_instr}, 	{0x3B,TSC_parse_instr}, 	{0xEB,XBA_parse_instr}, 	{0xFB,XCE_parse_instr}, 
 };
 
-// Parse an instruction from a starting memory address
-// This uses all of the /parse/*.cpp files and a LUT based on the opcode
-// to use function callbacks.
 instruction parseInstruction(uint8_t* memory_address, uint8_t m_flag_val) {
 	instruction instr;
-	
-    std::function<instruction(uint8_t*, uint8_t)> parseCall = opc_to_mnemonic.at(*memory_address);
-    // That's it. :)
-    instr = parseCall(memory_address, m_flag_val);
-
+	switch ( *memory_address ) {
+	}
 	return instr;
 }
 
