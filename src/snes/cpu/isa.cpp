@@ -1,5 +1,5 @@
-#include "../inc/isa.hpp"
-#include "../inc/isa_impl.hpp"
+#include "inc/isa.hpp"
+#include "inc/isa_impl.hpp"
 #include <map>
 
 namespace snes_cpu {

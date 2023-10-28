@@ -1,8 +1,11 @@
 #ifndef SNES_ISA_HPP
 #define SNES_ISA_HPP
 
-#include "snes_common.hpp"
-#include "snes_memory.hpp"
+#include <stdint.h>
+#include <bitset>
+#include <chrono>
+#include <math.h>
+#include <stdlib.h>
 #include <bitset>
 #include <functional>
 #include <vector>

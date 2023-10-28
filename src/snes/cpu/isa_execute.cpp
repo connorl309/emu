@@ -1,5 +1,5 @@
-#include "../inc/isa.hpp"
-#include "../inc/isa_impl.hpp"
+#include "inc/isa.hpp"
+#include "inc/isa_impl.hpp"
 
 typedef uint8_t u8;
 
